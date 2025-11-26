@@ -1,59 +1,133 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ServLink API 🏨🍽️
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> Conectando a economia gig da hotelaria e gastronomia em Florianópolis.
 
-## About Laravel
+![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel)
+![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql)
+![Docker](https://img.shields.io/badge/Docker-Sail-2496ED?style=for-the-badge&logo=docker)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+O **ServLink** é uma plataforma projetada para resolver o "hiato de qualidade e quantidade" no mercado de trabalho temporário de Florianópolis. Conectamos estabelecimentos (hotéis, restaurantes, eventos) a profissionais qualificados (garçons, cozinheiros, bartenders) de forma rápida, segura e verificada.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Este repositório contém a **API Backend** da aplicação.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Funcionalidades Principais
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+O backend fornece uma API RESTful completa para suportar as operações da plataforma:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   **🔐 Autenticação & Perfis:**
+    -   Login/Registro com validação de CPF/CNPJ.
+    -   Perfis distintos para Profissionais e Estabelecimentos.
+    -   Upload de documentos e fotos.
 
-## Laravel Sponsors
+-   **📢 Gestão de Vagas (Jobs):**
+    -   Criação, edição e cancelamento de vagas.
+    -   Definição de requisitos, horários e remuneração.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+-   **🤝 Candidaturas (Applications):**
+    -   Fluxo completo: Candidatura -> Aprovação/Rejeição -> Contratação.
+    -   Validação de conflitos de horário.
 
-### Premium Partners
+-   **⏱️ Turnos (Shifts):**
+    -   Geração automática de turnos após contratação.
+    -   **Check-in/Check-out** (simulação de QR Code).
+    -   Monitoramento de status em tempo real.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+-   **💰 Financeiro (Payments):**
+    -   Cálculo automático de valores e comissões.
+    -   Histórico financeiro detalhado.
 
-## Contributing
+-   **⭐ Reputação (Ratings):**
+    -   Sistema de avaliação mútua (dupla via).
+    -   Cálculo de média de reputação.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+-   **🔔 Notificações:**
+    -   Alertas sobre status de vagas, pagamentos e turnos.
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🛠️ Tecnologias Utilizadas
 
-## Security Vulnerabilities
+-   **Framework:** [Laravel 11](https://laravel.com)
+-   **Banco de Dados:** MySQL 8.0
+-   **Autenticação:** Laravel Sanctum
+-   **Ambiente de Dev:** Laravel Sail (Docker)
+-   **Testes:** PHPUnit (Configurado)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## ⚡ Como Rodar o Projeto
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Pré-requisitos
+-   [Docker Desktop](https://www.docker.com/products/docker-desktop) instalado e rodando.
+-   [WSL2](https://docs.microsoft.com/pt-br/windows/wsl/install) (se estiver no Windows).
+
+### Passo a Passo
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone https://github.com/mscarpenter/servlink-api.git
+    cd servlink-api
+    ```
+
+2.  **Configure o ambiente:**
+    ```bash
+    cp .env.example .env
+    ```
+    *Ajuste as variáveis de banco de dados no `.env` se necessário, mas o padrão do Sail já funciona.*
+
+3.  **Instale as dependências (via Container):**
+    ```bash
+    docker run --rm \
+        -u "$(id -u):$(id -g)" \
+        -v "$(pwd):/var/www/html" \
+        -w /var/www/html \
+        laravelsail/php82-composer:latest \
+        composer install --ignore-platform-reqs
+    ```
+
+4.  **Suba os containers:**
+    ```bash
+    ./vendor/bin/sail up -d
+    ```
+
+5.  **Gere a chave da aplicação e rode as migrations:**
+    ```bash
+    ./vendor/bin/sail artisan key:generate
+    ./vendor/bin/sail artisan migrate
+    ```
+
+6.  **Acesse a API:**
+    -   A API estará disponível em: `http://localhost/api`
+    -   Health check: `http://localhost/api/jobs` (deve retornar lista vazia ou vagas)
+
+---
+
+## 📚 Documentação da API
+
+A API segue os padrões REST. Abaixo, alguns dos principais endpoints:
+
+| Método | Endpoint | Descrição | Auth? |
+| :--- | :--- | :--- | :---: |
+| `POST` | `/api/register` | Registrar novo usuário | ❌ |
+| `POST` | `/api/login` | Autenticar usuário | ❌ |
+| `GET` | `/api/jobs` | Listar vagas disponíveis | ❌ |
+| `POST` | `/api/jobs` | Criar nova vaga | ✅ (Estab.) |
+| `POST` | `/api/applications` | Candidatar-se a uma vaga | ✅ (Prof.) |
+| `POST` | `/api/shifts` | Realizar Check-in | ✅ |
+| `GET` | `/api/notifications` | Listar notificações | ✅ |
+
+---
+
+## 🤝 Como Contribuir
+
+Contribuições são bem-vindas! Por favor, leia o arquivo [CONTRIBUTING.md](CONTRIBUTING.md) para detalhes sobre nosso código de conduta e o processo de envio de pull requests.
+
+---
+
+## 📄 Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
