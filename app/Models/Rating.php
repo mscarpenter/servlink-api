@@ -22,8 +22,14 @@ class Rating extends Model
     ];
 
     /**
-     * Define o relacionamento:
-     * Uma Avaliação (Rating) pertence a (belongsTo) um Turno (Shift).
+     * Casts.
+     */
+    protected $casts = [
+        'score' => 'integer',
+    ];
+
+    /**
+     * Uma Avaliação pertence a um Turno.
      */
     public function shift(): BelongsTo
     {
@@ -31,8 +37,7 @@ class Rating extends Model
     }
 
     /**
-     * Define o relacionamento:
-     * Uma Avaliação (Rating) foi dada por (belongsTo) um Usuário (Giver).
+     * Uma Avaliação foi dada por um Usuário (Giver).
      */
     public function giver(): BelongsTo
     {
@@ -40,8 +45,7 @@ class Rating extends Model
     }
 
     /**
-     * Define o relacionamento:
-     * Uma Avaliação (Rating) foi recebida por (belongsTo) um Usuário (Receiver).
+     * Uma Avaliação foi recebida por um Usuário (Receiver).
      */
     public function receiver(): BelongsTo
     {

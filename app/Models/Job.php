@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Job extends Model
 {
@@ -12,10 +13,9 @@ class Job extends Model
 
     /**
      * Campos que podem ser preenchidos em massa.
-     * (Precisamos adicionar os campos da sua tabela 'jobs' aqui)
      */
     protected $fillable = [
-        'establishment_id', // Precisamos confirmar se este é o nome da coluna
+        'establishment_id',
         'title',
         'description',
         'role',
@@ -27,13 +27,35 @@ class Job extends Model
     ];
 
     /**
-     * Define o relacionamento:
-     * Uma Vaga (Job) pode ter muitas (hasMany) Candidaturas (Applications).
+     * Cast attributes to native types.
+     */
+    protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime',
+        'rate' => 'decimal:2',
+    ];
+
+    /**
+     * Uma Vaga pertence a um Estabelecimento.
+     */
+    public function establishment(): BelongsTo
+    {
+        return $this->belongsTo(ProfilesEstablishment::class, 'establishment_id');
+    }
+
+    /**
+     * Uma Vaga pode ter muitas Candidaturas.
      */
     public function applications(): HasMany
     {
         return $this->hasMany(Application::class);
     }
 
-    // (Adicionaremos o relacionamento com 'Establishment' depois)
+    /**
+     * Uma Vaga pode ter muitos Turnos.
+     */
+    public function shifts(): HasMany
+    {
+        return $this->hasMany(Shift::class);
+    }
 }

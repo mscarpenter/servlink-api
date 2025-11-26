@@ -3,11 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ProfilesEstablishment; // Precisamos saber qual estabelecimento postou
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Job>
- */
 class JobFactory extends Factory
 {
     /**
@@ -17,22 +13,39 @@ class JobFactory extends Factory
      */
     public function definition(): array
     {
-        // Define as funções possíveis que o ServLink oferece
-        $roles = ['Garçom', 'Cozinheiro', 'Auxiliar de Cozinha', 'Bartender', 'Recepcionista'];
-        
-        // Define os status possíveis de uma vaga
-        $statuses = ['Open', 'Filled', 'Completed', 'Cancelled']; // 
+        // --- NOSSOS DADOS REALISTAS DE A&B ---
+        $cargos = [
+            'Garçom (Temporário)', 
+            'Bartender (Evento)', 
+            'Cozinheiro (Turno)', 
+            'Auxiliar de Cozinha',
+            'Recepcionista (Hotel)'
+        ];
+        $funcoes = [
+            'Garçom', 
+            'Bartender', 
+            'Cozinheiro', 
+            'Auxiliar de Cozinha',
+            'Recepcionista'
+        ];
+        // -------------------------------------
 
         return [
-            // 'establishment_id' será definido quando chamarmos (veremos no Seeder)
-            'title' => fake()->jobTitle() . ' (Temporário)', // Ex: "Gerente de Marketing (Temporário)"
-            'description' => fake()->paragraph(3),
-            'role' => $roles[array_rand($roles)], // Sorteia uma das funções
-            'rate' => fake()->randomFloat(2, 15, 30), // Valor por hora entre R$15 e R$30
-            'rate_type' => 'Hourly', // 
-            'start_time' => fake()->dateTimeBetween('+1 day', '+7 days'), // Vaga para a próxima semana
-            'end_time' => fake()->dateTimeBetween('+8 days', '+10 days'),
-            'status' => $statuses[array_rand($statuses)], // Sorteia um status
+            // Sorteia um dos nossos cargos
+            'title' => $this->faker->randomElement($cargos), 
+            
+            // Coloca uma descrição fixa (sem "latim")
+            'description' => 'Vaga temporária para cobrir alta temporada no setor de A&B.', 
+            
+            // Sorteia uma das nossas funções
+            'role' => $this->faker->randomElement($funcoes), 
+            
+            // Mantém os valores aleatórios, que estão bons
+            'rate' => $this->faker->randomFloat(2, 20, 100), 
+            'rate_type' => 'Hourly',
+            'start_time' => $this->faker->dateTimeBetween('+1 day', '+5 days'),
+            'end_time' => $this->faker->dateTimeBetween('+6 days', '+10 days'),
+            'status' => 'Open',
         ];
     }
 }

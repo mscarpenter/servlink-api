@@ -6,8 +6,8 @@ use App\Models\User;
 use App\Models\Job;
 use App\Models\ProfilesEstablishment;
 use App\Models\ProfilesProfessional;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,33 +16,84 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // --- CRIAÇÃO DOS ESTABELECIMENTOS (Mariana) ---
-        // Cria 10 Usuários com o "estado" de 'establishment'
-        User::factory(10)->establishment()->create()->each(function ($user) {
-            // Para CADA usuário establishment criado, crie um perfil para ele
-            ProfilesEstablishment::factory()->create([
-                'user_id' => $user->id,
+        // Limpar tabelas antes de rodar (opcional, mas bom para testes limpos)
+        // User::truncate(); // Cuidado em produção!
+
+        // --- 1. CRIAR 6 ESTABELECIMENTOS ESPECÍFICOS ---
+        $estabelecimentos = [
+            ['name' => 'Hotel Jurerê Exclusive', 'email' => 'est1@servlink.com'],
+            ['name' => 'Restaurante Canto da Lagoa', 'email' => 'est2@servlink.com'],
+            ['name' => 'Bar Top Market', 'email' => 'est3@servlink.com'],
+            ['name' => 'Pousada dos Sonhos', 'email' => 'est4@servlink.com'],
+            ['name' => 'Café da Praça', 'email' => 'est5@servlink.com'],
+            ['name' => 'Eventos Floripa', 'email' => 'est6@servlink.com'],
+        ];
+
+        foreach ($estabelecimentos as $est) {
+            $user = User::create([
+                'name' => $est['name'],
+                'email' => $est['email'],
+                'password' => Hash::make('password'), // Senha padrão
+                'role' => 'establishment',
             ]);
-        });
 
-        // --- CRIAÇÃO DOS PROFISSIONAIS (Lucas) ---
-        // Cria 50 Usuários com o "estado" padrão ('professional')
-        User::factory(50)->create()->each(function ($user) {
-            // Para CADA usuário professional criado, crie um perfil para ele
-            ProfilesProfessional::factory()->create([
+            ProfilesEstablishment::create([
                 'user_id' => $user->id,
-                'full_name' => $user->name, // Usa o mesmo nome do usuário
+                'company_name' => $est['name'],
+                'cnpj' => '00.000.000/0001-' . rand(10, 99),
+                'phone' => '(48) 3000-0000',
+                'address' => 'Endereço Fictício, ' . rand(1, 1000),
+                'logo_url' => 'https://via.placeholder.com/150',
+                'average_rating' => rand(40, 50) / 10,
             ]);
-        });
+        }
 
-        // --- CRIAÇÃO DAS VAGAS (Jobs) ---
-        // Pega todos os IDs dos estabelecimentos que acabamos de criar
-        $establishmentIds = ProfilesEstablishment::pluck('id');
+        // --- 2. CRIAR 15 PROFISSIONAIS ESPECÍFICOS ---
+        $profissionais = [
+            ['name' => 'Lucas Silva', 'email' => 'prof1@servlink.com', 'job' => 'Bartender'],
+            ['name' => 'Ana Cristina', 'email' => 'prof2@servlink.com', 'job' => 'Cozinheira'],
+            ['name' => 'Pedro Mello', 'email' => 'prof3@servlink.com', 'job' => 'Garçom'],
+            ['name' => 'Mariana Souza', 'email' => 'prof4@servlink.com', 'job' => 'Recepcionista'],
+            ['name' => 'João Paulo', 'email' => 'prof5@servlink.com', 'job' => 'Auxiliar de Cozinha'],
+            ['name' => 'Fernanda Lima', 'email' => 'prof6@servlink.com', 'job' => 'Bartender'],
+            ['name' => 'Ricardo Oliveira', 'email' => 'prof7@servlink.com', 'job' => 'Garçom'],
+            ['name' => 'Camila Santos', 'email' => 'prof8@servlink.com', 'job' => 'Cozinheira'],
+            ['name' => 'Bruno Costa', 'email' => 'prof9@servlink.com', 'job' => 'Ajudante Geral'],
+            ['name' => 'Patricia Rocha', 'email' => 'prof10@servlink.com', 'job' => 'Recepcionista'],
+            ['name' => 'Gabriel Alves', 'email' => 'prof11@servlink.com', 'job' => 'Bartender'],
+            ['name' => 'Juliana Martins', 'email' => 'prof12@servlink.com', 'job' => 'Garçonete'],
+            ['name' => 'Rafael Dias', 'email' => 'prof13@servlink.com', 'job' => 'Cozinheiro'],
+            ['name' => 'Larissa Pereira', 'email' => 'prof14@servlink.com', 'job' => 'Auxiliar'],
+            ['name' => 'Thiago Gomes', 'email' => 'prof15@servlink.com', 'job' => 'Segurança'],
+        ];
 
-        // Cria 100 Vagas
-        Job::factory(100)->create([
-            // Sorteia aleatoriamente um ID de estabelecimento para ser o "dono" da vaga
-            'establishment_id' => $establishmentIds->random(),
-        ]);
+        foreach ($profissionais as $prof) {
+            $user = User::create([
+                'name' => $prof['name'],
+                'email' => $prof['email'],
+                'password' => Hash::make('password'),
+                'role' => 'professional',
+            ]);
+
+            ProfilesProfessional::create([
+                'user_id' => $user->id,
+                'full_name' => $prof['name'],
+                'cpf' => '000.000.000-' . rand(10, 99),
+                'phone' => '(48) 99999-0000',
+                'bio' => 'Profissional experiente em ' . $prof['job'],
+                'photo_url' => 'https://via.placeholder.com/150',
+                'overall_rating' => rand(40, 50) / 10,
+            ]);
+        }
+
+        // --- 3. CRIAR VAGAS PARA OS ESTABELECIMENTOS ---
+        $establishmentProfiles = ProfilesEstablishment::all();
+
+        foreach ($establishmentProfiles as $estProfile) {
+            Job::factory(5)->create([
+                'establishment_id' => $estProfile->id,
+                'establishment_user_id' => $estProfile->user_id, // Importante para filtro
+            ]);
+        }
     }
 }

@@ -32,6 +32,9 @@ return new class extends Migration
 
             $table->decimal('confirmed_hours', 5, 2)->nullable(); // Horas finais confirmadas pelo Estabelecimento
             
+            // QR Code único para check-in/check-out
+            $table->string('qr_code')->unique()->nullable();
+            
             // --- Lógica de Status (Jurídico/Financeiro) ---
             $table->enum('status', ['scheduled', 'in_progress', 'completed', 'no_show', 'cancelled'])
                   ->default('scheduled')

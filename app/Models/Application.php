@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Application extends Model
 {
@@ -20,22 +21,34 @@ class Application extends Model
     ];
 
     /**
-     * Define o relacionamento:
-     * Uma Candidatura (Application) pertence a (belongsTo) um Usuário (User).
+     * Uma Candidatura pertence a um Usuário (Professional).
      */
     public function user(): BelongsTo
     {
-        // Aponta para o Model 'User'
-        return $this->belongsTo(User::class); 
+        return $this->belongsTo(User::class);
     }
 
     /**
-     * Define o relacionamento:
-     * Uma Candidatura (Application) pertence a (belongsTo) uma Vaga (Job).
+     * Alias para acessar o profissional via user relationship.
+     */
+    public function professional()
+    {
+        return $this->user()->with('professionalProfile');
+    }
+
+    /**
+     * Uma Candidatura pertence a uma Vaga.
      */
     public function job(): BelongsTo
     {
-        // Aponta para o Model 'Job' (que o Sail já criou)
-        return $this->belongsTo(Job::class); 
+        return $this->belongsTo(Job::class);
+    }
+
+    /**
+     * Uma Candidatura pode ter um Turno (shift).
+     */
+    public function shift(): HasOne
+    {
+        return $this->hasOne(Shift::class);
     }
 }
